@@ -9,11 +9,13 @@ connectDb();
 
 const {errorHandler} = require('./middleware/error.middleware')
 const goalsRouter = require('./routes/goalRoutes')
+const userRouter = require('./routes/userRoutes')
 
 app.use(express.json());
 app.use(express.urlencoded({extended: false}))
 
 app.use('/api/goals', goalsRouter);
+app.use('/api/users', userRouter);
 
 app.use(errorHandler)
 
