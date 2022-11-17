@@ -58,6 +58,9 @@ const loginUser = asyncHandler(async (req, res) => {
     email: email
   })
 
+
+  // !!!!!
+
   if (user && await bcrypt.compare(password, user.password)) {
     res.json({
       _id: user.id,
@@ -72,16 +75,6 @@ const loginUser = asyncHandler(async (req, res) => {
 
 })
 
-//  @desc Register user
-//  @route Post /api/users
-//  @access Public
-
-const getMe = asyncHandler(async (req, res) => {
-  res.status(200).json({ message: 'User data display' })
-})
-
-
-
 // Generate JWT
 
 const generateToken = (id) => {
@@ -89,6 +82,24 @@ const generateToken = (id) => {
     expiresIn: '30d'
   })
 }
+
+
+//  @desc Register user
+//  @route Post /api/users
+//  @access Private
+
+const getMe = asyncHandler(async (req, res) => {
+  const {_id, name, email} = await User.findById(req.user.id)
+  
+  res.status(200).json({ 
+    id: _id,
+    name,
+    email
+  })
+})
+
+
+
 
 module.exports = {
   registerUser,
